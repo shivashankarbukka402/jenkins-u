@@ -1,6 +1,9 @@
 pipeline {
     agent any
 
+        tools {
+        maven 'M3'   // same name as above
+
     environment {
         GIT_URL = 'https://github.com/shivashankarbukka402/jenkins.git'
         GIT_BRANCH = 'main'
