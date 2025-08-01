@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+
+    environment {
+        GIT_URL = 'https://github.com/shivashankarbukka402/jenkins.git'
+        GIT_BRANCH = 'main'
+        GIT_CREDENTIALS = 'shivashankarbukka402'
+    }
+
+    stages {
+        stage('CHECKOUT') {
+            steps{
+                script {
+                    git branch: "${env.GIT_BRANCH}",
+                     credentialsId: "${env.GIT_CREDENTIALS}",
+                      url: "${env.GIT_URL}"
+                }
+            }
+        }
+        stage('CHECK') {
+            steps {
+                sh '''
+                   ls -lrt
+                   echo "$GIT_BRANCH"
+                '''
+            }
+        }
+	    stage('Build with Maven') {
+            steps {
+                sh 'mvn clean install'
+            }
+        }
+    }
+}
